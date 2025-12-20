@@ -1,9 +1,28 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import Login from "./pages/Login"
+import StudentDashboard from "./pages/StudentDashboard"
+import TeacherDashboard from "./pages/TeacherDashboard"
+import ProtectedRoute from "./components/ProtectedRoute"
+
 function App() {
   return (
-    <div>
-      <h1>EduQuiz</h1>
-      <p>React frontend is running</p>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/teacher" element={
+            <ProtectedRoute role="Teacher">
+              <TeacherDashboard />
+            </ProtectedRoute>
+          } 
+        />
+        <Route path="/student" element={
+            <ProtectedRoute role="Student">
+              <StudentDashboard />
+            </ProtectedRoute>
+          } 
+        />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
