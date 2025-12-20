@@ -5,7 +5,7 @@ function TeacherDashboard() {
 
     const logout = () => {
         localStorage.clear()
-        navigate("/")
+        navigate("/login")
     }
 
     return (

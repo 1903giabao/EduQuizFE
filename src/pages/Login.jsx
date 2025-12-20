@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { login } from "../services/api/authService"
+import { login } from "../services/api/auth/service"
 
 function Login() {
     const [email, setEmail] = useState("")
@@ -14,9 +14,12 @@ function Login() {
 
         try {
             const result = await login(email, password)
-            localStorage.setItem("token", result.token)
-            localStorage.setItem("role", result.role)
 
+            if (!result.role) {
+                navigate("/login")
+            }
+            console.log(localStorage.getItem("accessToken"));
+            console.log(localStorage.getItem("role"));
             if (result.role === "Teacher") {
                 navigate("/teacher")
             } else {
