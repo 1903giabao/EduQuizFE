@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 
-function StudentDashboard() {
+function StudentHomePage() {
     const navigate = useNavigate()
 
     const logout = () => {
@@ -17,4 +17,4 @@ function StudentDashboard() {
     )
 }
 
-export default StudentDashboard
+export default StudentHomePage
