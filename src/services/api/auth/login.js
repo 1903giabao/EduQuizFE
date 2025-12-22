@@ -1,13 +1,14 @@
-import axiosClient from "../axiosClient"
+import axiosClient from "../axiosClient";
 
 export const login = async (email, password) => {
   try {
     const res = await axiosClient.post("/auth/login", { email, password });
-
     const apiData = res.data;
 
     if (!apiData.success) {
-      throw new Error(apiData.errors?.[0]?.message || "Login failed");
+      return {
+        errorMessage: apiData.errors?.[0]?.message || "Invalid email or password"
+      };
     }
 
     const { token, role, accountId } = apiData.data;
@@ -20,8 +21,15 @@ export const login = async (email, password) => {
       refreshToken: token.refreshToken,
       role,
       accountId,
+      errorMessage: null
     };
+
   } catch (err) {
-    throw new Error(err.response?.data?.errors?.[0]?.message || err.message);
+    return {
+      errorMessage:
+        err.response?.data?.errors?.[0]?.message ||
+        err.message ||
+        "Login failed"
+    };
   }
 };
