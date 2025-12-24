@@ -1,13 +1,26 @@
-import { useState } from "react";
+import {
+  ButtonHTMLAttributes,
+  ChangeEvent,
+  FormEvent,
+  InputHTMLAttributes,
+  SelectHTMLAttributes,
+  useState,
+} from "react";
 import { useNavigate } from "react-router-dom";
-import { register } from "../../services/api/auth/register";
+import { register } from "../../services/api/auth/register/register";
 import PasswordInput from "../../components/forms/password-input.component";
+import { RegisterPayload } from "../../services/api/auth/register/register-payload";
 
-function SignupForm() {
+type SignupFormProps = {
+  onSwitch: () => void;
+};
+
+function SignupForm({ onSwitch }: SignupFormProps) {
   const navigate = useNavigate();
 
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<RegisterPayload>({
     email: "",
+    password: "",
     firstName: "",
     lastName: "",
     gender: "Male",
@@ -17,40 +30,32 @@ function SignupForm() {
     isTeacherRegistration: false,
     bio: "",
     department: "",
-    parentPhoneNumer: "",
+    parentPhoneNumber: "",
     grade: "",
     school: "",
   });
 
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
-  const handleChange = (e) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
 
-    const payload = {
-      email: form.email,
-      password: password,
-      firstName: form.firstName,
-      lastName: form.lastName,
-      gender: form.gender,
-      dateOfBirth: form.dateOfBirth,
-      address: form.address,
-      phoneNumber: form.phoneNumber,
-      isTeacherRegistration: form.isTeacherRegistration,
-      bio: form.isTeacherRegistration ? form.bio : null,
-      department: form.isTeacherRegistration ? form.department : null,
-      parentPhoneNumer: !form.isTeacherRegistration
-        ? form.parentPhoneNumer
-        : null,
-      grade: !form.isTeacherRegistration ? form.grade : null,
-      school: !form.isTeacherRegistration ? form.school : null,
+    const payload: RegisterPayload = {
+      ...form,
+      password,
     };
 
     const result = await register(payload);
@@ -60,7 +65,7 @@ function SignupForm() {
       return;
     }
 
-    console.log(error);    
+    console.log(error);
 
     navigate("/login");
   };
@@ -73,12 +78,12 @@ function SignupForm() {
           src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
           className="mx-auto h-10 w-auto"
         />
-        <h2 className="mt-10 mb-4 text-center text-2xl/9 font-bold tracking-tight text-white">
+        <h2 className="mt-10 mb-4 text-center text-2xl/9 font-bold tracking-tight text-black">
           Sign up a new account
         </h2>
       </div>
 
-      <div className="sm:mx-auto w-full max-w-4xl bg-blue-900 backdrop-blur rounded-xl p-6">
+      <div className="sm:mx-auto w-full max-w-4xl bg-white backdrop-blur rounded-xl p-6">
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="md:col-span-2 flex gap-8">
             <RoleButton
@@ -86,14 +91,14 @@ function SignupForm() {
               onClick={() =>
                 setForm((f) => ({ ...f, isTeacherRegistration: false }))
               }
-              label="Student"
+              label="As a Student"
             />
             <RoleButton
               active={form.isTeacherRegistration}
               onClick={() =>
                 setForm((f) => ({ ...f, isTeacherRegistration: true }))
               }
-              label="Teacher"
+              label="As a Teacher"
             />
           </div>
 
@@ -167,8 +172,8 @@ function SignupForm() {
               <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-4">
                 <Input
                   label="Parent phone number"
-                  name="parentPhoneNumer"
-                  value={form.parentPhoneNumer}
+                  name="parentPhoneNumber"
+                  value={form.parentPhoneNumber}
                   onChange={handleChange}
                 />
                 <Input
@@ -189,7 +194,7 @@ function SignupForm() {
             <div className="md:col-span-2">
               <button
                 type="submit"
-                className="w-full rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-400"
+                className="w-full rounded-md bg-blue4167cd px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-500"
               >
                 Sign up
               </button>
@@ -199,8 +204,8 @@ function SignupForm() {
         <p className="mt-4 text-center text-sm/6 text-gray-400">
           Already had an account?{" "}
           <a
-            href="/login"
-            className="font-semibold text-indigo-400 hover:text-indigo-300"
+            onClick={onSwitch}
+            className="font-semibold text-blue4167cd hover:text-indigo-500 cursor-pointer"
           >
             Sign in
           </a>
@@ -210,46 +215,69 @@ function SignupForm() {
   );
 }
 
-function Input({ label, error, ...props }) {
+function Input({
+  label,
+  error,
+  ...props
+}: {
+  label: string;
+  error?: string;
+} & InputHTMLAttributes<HTMLInputElement>) {
   return (
     <div>
-      <label className="block text-sm font-medium text-gray-100">
-        {label}
-      </label>
-      <input
-        {...props}
-        required
-        className={`mt-2 block w-full rounded-md px-3 py-1.5 text-white outline-white/10 focus:outline-indigo-500 bg-white/5`}
-      />
+      <label className="block text-sm font-medium text-gray-500">{label}</label>
+      <div className="mt-2">
+        <div className="rounded-md bg-white/5 p-[2px] ring-2 ring-gray-500 transition">
+          <input
+            {...props}
+            required
+            className={`block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-black placeholder:text-gray-500 outline-none sm:text-sm`}
+          />
+        </div>
+      </div>
     </div>
   );
 }
 
-function SelectGender({ value, onChange }) {
+function SelectGender({
+  value,
+  onChange,
+}: SelectHTMLAttributes<HTMLSelectElement>) {
   return (
     <div>
-      <label className="block text-sm font-medium text-gray-100">Gender</label>
-      <select
-        name="gender"
-        value={value}
-        onChange={onChange}
-        className="mt-2 w-full rounded-md bg-white/5 px-3 py-2 text-white"
-      >
-        <option value="Male" className="bg-blue-900 text-white">
-          Male
-        </option>
-        <option value="Female" className="bg-blue-900 text-white">
-          Female
-        </option>
-        <option value="Other" className="bg-blue-900 text-white">
-          Other
-        </option>
-      </select>
+      <label className="block text-sm font-medium text-gray-500">Gender</label>
+      <div className="mt-2">
+        <div className="rounded-md bg-white/5 p-[2px] ring-2 ring-gray-500 transition">
+          <select
+            name="gender"
+            value={value}
+            onChange={onChange}
+            className="w-full rounded-md bg-white/5 px-3 py-1.5 text-black"
+          >
+            <option value="Male" className="bg-gray text-black">
+              Male
+            </option>
+            <option value="Female" className="bg-gray text-black">
+              Female
+            </option>
+            <option value="Other" className="bg-gray text-black">
+              Other
+            </option>
+          </select>
+        </div>
+      </div>
     </div>
   );
 }
 
-function RoleButton({ active, label, onClick }) {
+function RoleButton({
+  active,
+  label,
+  onClick,
+}: {
+  active: boolean;
+  label: string;
+} & ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
       type="button"
@@ -257,8 +285,8 @@ function RoleButton({ active, label, onClick }) {
       className={`w-full rounded-md px-3 py-2 text-sm font-semibold
         ${
           active
-            ? "bg-indigo-500 text-white"
-            : "bg-white/5 text-gray-300 hover:bg-white/10"
+            ? "bg-blue4167cd text-white"
+            : "bg-gray-200 text-gray-500 hover:bg-gray-100"
         }`}
     >
       {label}

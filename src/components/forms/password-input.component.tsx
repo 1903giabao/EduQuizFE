@@ -1,40 +1,50 @@
-import { useState } from "react"
+import { useState, ChangeEvent } from "react";
 
-function PasswordInput({ password, onChange }) {
-  const [showPassword, setShowPassword] = useState("password");
+type PasswordInputProps = {
+  password: string;
+  onChange: (value: string) => void;
+};
+
+function PasswordInput({ password, onChange }: PasswordInputProps) {
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   return (
     <div>
       <div className="flex items-center justify-between">
         <label
           htmlFor="password"
-          className="block text-sm/6 font-medium text-gray-100"
+          className="block text-sm/5 font-medium text-gray-500"
         >
           Password
         </label>
       </div>
 
       <div className="relative mt-2">
-        <input
-          id="password"
-          name="password"
-          type={showPassword ? "password" : "text"}
-          required
-          value={password}
-          onChange={(e) => onChange(e.target.value)}
-          autoComplete="current-password"
-          className="block w-full rounded-md bg-white/5 px-3 py-1.5 pr-10
-                                    text-base text-white outline-1 -outline-offset-1
-                                    outline-white/10 placeholder:text-gray-500
-                                    focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500
-                                    sm:text-sm/6"
-        />
+        <div className="rounded-md bg-white/5 p-[2px] ring-2 ring-gray-500 transition">
+          <input
+            id="password"
+            name="password"
+            type={showPassword ? "password" : "text"}
+            required
+            value={password}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onChange(e.target.value)
+            }
+            autoComplete="current-password"
+            className="
+              block w-full rounded-md bg-white/5 px-3 py-1.5 pr-10
+              text-base text-black placeholder:text-gray-500
+              sm:text-sm
+              outline-none
+            "
+          />
+        </div>
 
         <button
           type="button"
-          onClick={() => setShowPassword(!showPassword)}
+          onClick={() => setShowPassword((prev) => !prev)}
           className="absolute inset-y-0 right-0 flex items-center pr-3
-                                    text-gray-400 hover:text-gray-200 transition"
+                                    text-gray-600 hover:text-gray-400 transition"
           aria-label={showPassword ? "Hide password" : "Show password"}
         >
           {showPassword ? (
