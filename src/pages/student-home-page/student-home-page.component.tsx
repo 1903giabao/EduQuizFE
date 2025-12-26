@@ -1,7 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import SideBar from "../../components/side-bar/side-bar.component";
+import Calendar from "../../components/calendar/Calendar.component";
+import ClassSlotList from "../../components/class-list/ClassSlotList.component";
+import { useState } from "react";
 
 function StudentHomePage() {
+  const [curDate, setCurDate] = useState(new Date());
   const navigate = useNavigate();
 
   const logout = () => {
@@ -11,22 +15,15 @@ function StudentHomePage() {
 
   return (
     <div className="flex h-screen">
-      {/* Sidebar */}
       <div className="w-64">
         <SideBar />
       </div>
 
-      {/* Main content */}
       <div className="flex-1 p-6">
-        <h2 className="text-xl font-semibold">Student Dashboard</h2>
-        <p className="mt-2 text-gray-600">Take quizzes & view grades</p>
-
-        <button
-          onClick={logout}
-          className="mt-4 rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
-        >
-          Logout
-        </button>
+        <ClassSlotList date={curDate} />
+      </div>
+      <div className="flex-2 p-6">
+        <Calendar onSelectDate={(date) => setCurDate(date)}/>
       </div>
     </div>
   );
