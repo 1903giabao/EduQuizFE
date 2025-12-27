@@ -17,7 +17,10 @@ function Calendar({ onSelectDate }: Props) {
   }
 
   function onChooseDate(day: number) {
-    setSelectedDate(new Date(currentYear, currentMonth, day));
+    let newDate = new Date(currentYear, currentMonth, day);
+    if (newDate.toISOString() != selectedDate.toISOString()) {
+      setSelectedDate(newDate);
+    }
   }
 
   useEffect(() => {
@@ -25,16 +28,16 @@ function Calendar({ onSelectDate }: Props) {
   }, [selectedDate]);
 
   return (
-    <div className="w-80 bg-gray-700 text-white p-4 rounded-xl">
+    <div className="w-80 bg-blue-50 text-black p-4 rounded-xl border-2 border-blue4167cd">
       <div className="flex flex-row justify-between gap-2 px-6">
         <button
           onClick={() => {
             onChangeMonth(-1);
           }}
         >
-          <div className="w-0 h-0 border-t-[6px] border-b-[6px] border-r-[10px] border-transparent border-r-gray-100"></div>
+          <div className="w-0 h-0 border-t-[6px] border-b-[6px] border-r-[10px] border-transparent border-r-blue4167cd"></div>
         </button>
-        <h2 className="text-center font-semibold text-lg">
+        <h2 className="text-center font-semibold text-lg text-blue4167cd">
           {currentDate.toLocaleDateString("en-US", {
             month: "long",
             year: "numeric",
@@ -45,10 +48,10 @@ function Calendar({ onSelectDate }: Props) {
             onChangeMonth(1);
           }}
         >
-          <div className="w-0 h-0 border-t-[6px] border-b-[6px] border-l-[10px] border-transparent border-l-gray-100"></div>
+          <div className="w-0 h-0 border-t-[6px] border-b-[6px] border-l-[10px] border-transparent border-l-blue4167cd"></div>
         </button>
       </div>
-      <div className="mt-4 grid grid-cols-7 text-center text-sm text-gray-400">
+      <div className="mt-4 grid grid-cols-7 text-center text-sm text-gray-500">
         {WEEK_DAYS.map((day) => (
           <div key={day}>{day}</div>
         ))}
@@ -71,9 +74,9 @@ function Calendar({ onSelectDate }: Props) {
           return (
             <button
               key={day}
-              className={`h-9 rounded-full hover:bg-blue-500 ${
-                isCurrentDate && "border border-blue-500"
-              } ${isSelectedDate && "bg-blue-500"}`}
+              className={`h-9 rounded-full hover:bg-blue4167cd hover:text-white ${
+                isCurrentDate && "border border-blue4167cd"
+              } ${isSelectedDate && "bg-blue4167cd text-white"}`}
               onClick={() => onChooseDate(day)}
             >
               {day}

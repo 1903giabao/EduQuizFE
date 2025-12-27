@@ -34,18 +34,18 @@ function LoginForm({ onSwitch }: LoginFormProps) {
   return (
     <>
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="flex flex-col justify-center items-center sm:mx-auto sm:w-full sm:max-w-sm">
           <img
-            alt="Your Company"
-            src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-            className=" h-10 w-auto"
+            src={`/EduQuizLogo.png`}
+            alt="Take a break Image"
+            className="w-20 h-20"
           />
-          <h2 className="mt-6 text-left text-2xl/9 font-bold tracking-tight text-black/2">
+          <h2 className="mt-6 text-center text-2xl/9 font-bold tracking-tight text-black/2">
             Log in to your account
           </h2>
-        </div>
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <p className="mt-4 text-gray-500">Welcome back! Sweetie!</p>
+          <div className="text-center sm:mx-auto sm:w-full sm:max-w-sm">
+            <p className="mt-4 text-gray-500">Welcome back! Sweetie!</p>
+          </div>
         </div>
         <div className="mt-2 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={handleSubmit}>
