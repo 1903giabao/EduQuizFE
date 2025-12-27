@@ -51,6 +51,7 @@ export const login = async (
 
     localStorage.setItem("accessToken", token.accessToken);
     localStorage.setItem("role", role);
+    localStorage.setItem("accountId", accountId);
 
     return {
       accessToken: token.accessToken,

@@ -11,19 +11,18 @@ function SideBar() {
 
   return (
     <div className="flex h-screen w-64 flex-col justify-between border-e border-gray-100 bg-white">
-      {/* TOP */}
       <div className="px-4 py-6">
-        <span className="grid h-10 w-32 place-content-center rounded-lg bg-gray-100 text-xs text-gray-600">
-          Logo
-        </span>
+        <div className="mt-4 flex justify-center items-center">
+          <img src={`/EduQuizLogo.png`} alt="Take a break Image" className="w-24 h-24" />
+        </div>
 
-        <ul className="mt-40">
+        <ul className="mt-12">
           {[
             { id: "home", label: "Home" },
-            { id: "teams", label: "Teams" },
-            { id: "billing", label: "Billing" },
-            { id: "invoices", label: "Invoices" },
-            { id: "account", label: "Account" },
+            { id: "schedule", label: "Schedule" },
+            { id: "classes", label: "My Classes" },
+            { id: "quizzes", label: "My Quizzes" },
+            { id: "profile", label: "Profile" },
           ].map((item) => (
             <li key={item.id} className="mt-4">
               <a
@@ -39,7 +38,6 @@ function SideBar() {
         </ul>
       </div>
 
-      {/* USER */}
       <div className="sticky inset-x-0 bottom-0 border-t border-gray-100">
         <div className="flex items-center gap-2 bg-white p-4">
           <img

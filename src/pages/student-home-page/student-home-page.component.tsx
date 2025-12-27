@@ -22,7 +22,7 @@ function StudentHomePage() {
       <div className="flex-1 p-6">
         <ClassSlotList date={curDate} />
       </div>
-      <div className="flex-2 p-6">
+      <div className="my-12 rounded-s-3xl flex-2 p-8 bg-blue-50">
         <Calendar onSelectDate={(date) => setCurDate(date)}/>
       </div>
     </div>

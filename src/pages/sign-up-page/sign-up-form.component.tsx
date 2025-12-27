@@ -72,13 +72,13 @@ function SignupForm({ onSwitch }: SignupFormProps) {
 
   return (
     <div className="flex min-h-full items-center flex-col justify-center px-4 py-6 lg:px-6">
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+      <div className="flex flex-col justify-center items-center sm:mx-auto sm:w-full sm:max-w-sm">
         <img
-          alt="Your Company"
-          src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-          className="mx-auto h-10 w-auto"
+          src={`/EduQuizLogo.png`}
+          alt="Take a break Image"
+          className="w-20 h-20"
         />
-        <h2 className="mt-10 mb-4 text-center text-2xl/9 font-bold tracking-tight text-black">
+        <h2 className="mt-4 mb-4 text-center text-2xl/9 font-bold tracking-tight text-black">
           Sign up a new account
         </h2>
       </div>
