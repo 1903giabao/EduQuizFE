@@ -11,12 +11,22 @@ async function GetClassSlot({
   studentId,
   teacherId,
   date,
+  startDate,
+  endDate,
 }: GetClassSlotPayload): Promise<GetClassSlotResult> {
   try {
     const params: Record<string, string> = {};
 
     if (date !== null) {
       params.date = date;
+    }
+
+    if (startDate !== null) {
+      params.startDate = startDate;
+    }
+
+    if (endDate !== null) {
+      params.endDate = endDate;
     }
 
     if (teacherId !== null) {
@@ -36,10 +46,11 @@ async function GetClassSlot({
           {
             id: null,
             className: null,
-            classTime: null,
             location: null,
             classDescription: null,
             teacherName: null,
+            startTime: null,
+            endTime: null,
           },
         ],
         errorMessage: apiData.errors?.[0]?.message || "Fail to get class slots",
@@ -53,12 +64,8 @@ async function GetClassSlot({
         classDescription: slot.description,
         location: slot.location,
         teacherName: slot.teacherName,
-        classTime:
-          slot.startTime && slot.endTime
-            ? `${dayjs(slot.startTime).format("HH:mm")} - ${dayjs(
-                slot.endTime
-              ).format("HH:mm")}`
-            : null,
+        startTime: slot.startTime,
+        endTime: slot.endTime,
       })),
       errorMessage: null,
     };
@@ -68,10 +75,11 @@ async function GetClassSlot({
         {
           id: null,
           className: null,
-          classTime: null,
           location: null,
           classDescription: null,
           teacherName: null,
+          startTime: null,
+          endTime: null,
         },
       ],
       errorMessage: error.message || "Fail to get class slots",
