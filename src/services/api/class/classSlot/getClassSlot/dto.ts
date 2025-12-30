@@ -2,6 +2,8 @@ export type GetClassSlotPayload = {
   studentId: string;
   teacherId?: string;
   date?: string;
+  startDate?: string;
+  endDate?: string;
 };
 
 export type GetClassSlotResponse = {
@@ -24,6 +26,7 @@ export type ClassSlotResult = {
   className: string;
   teacherName: string;
   classDescription: string;
-  classTime: string;
+  startTime: Date;
+  endTime: Date;
   location: string;
 };

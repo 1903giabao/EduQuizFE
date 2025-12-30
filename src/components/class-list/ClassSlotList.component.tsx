@@ -47,9 +47,6 @@ function ClassSlotList({ date }: Props) {
 
   return (
     <div className="w-full">
-      <div className="text-center mt-4 mb-8 text-4xl font-bold text-blue4167cd">
-        My slot in {date && date.toLocaleDateString()}
-      </div>
       <div className="">
         {loading ? (
           <>

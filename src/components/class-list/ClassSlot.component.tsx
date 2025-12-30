@@ -1,6 +1,15 @@
+import dayjs from "dayjs";
 import { ClassSlotResult } from "../../services/api/class/classSlot/getClassSlot/dto";
 
-const IMG_LIST = ["calm", "energetic", "excited", "fast", "friendly", "honest", "smart"];
+const IMG_LIST = [
+  "calm",
+  "energetic",
+  "excited",
+  "fast",
+  "friendly",
+  "honest",
+  "smart",
+];
 
 function getRandomImage(id?: string | number) {
   if (!id) return IMG_LIST[0];
@@ -52,7 +61,9 @@ function ClassSlot({ slot }: { slot: ClassSlotResult }) {
 
           <div className="grid grid-cols-3 mt-2 text-xs text-gray-500">
             <div>{slot.location}</div>
-            <div>{slot.classTime}</div>
+            <div>{`${dayjs(new Date(slot.startTime)).format("HH:mm")} - ${dayjs(
+              new Date(slot.endTime)
+            ).format("HH:mm")}`}</div>
           </div>
         </div>
 

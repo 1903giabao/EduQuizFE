@@ -18,12 +18,14 @@ function StudentHomePage() {
       <div className="w-64">
         <SideBar />
       </div>
-
       <div className="flex-1 p-6">
+        <div className="text-center mt-4 mb-8 text-4xl font-bold text-blue4167cd">
+          My slot in {curDate && curDate.toLocaleDateString()}
+        </div>
         <ClassSlotList date={curDate} />
       </div>
       <div className="my-12 rounded-s-3xl flex-2 p-8 bg-blue-50">
-        <Calendar onSelectDate={(date) => setCurDate(date)}/>
+        <Calendar onSelectDate={(date) => setCurDate(date)} />
       </div>
     </div>
   );
