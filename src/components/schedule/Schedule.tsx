@@ -49,12 +49,12 @@ function Schedule({
 
   return (
     <div className="relative">
-      <div className="grid grid-cols-[80px_repeat(7,1fr)] auto-rows-[60px] border-8 border-blue-50 rounded-3xl">
+      <div className="grid grid-cols-[80px_repeat(7,1fr)] auto-rows-[60px]  rounded-3xl bg-white">
         <div />
 
         {DAYS_IN_WEEK.map((day, i) => (
           <div key={day} className="border-l border-blue-100">
-            <div className="text-center text-2xl font-bold text-blue4167cd">
+            <div className="text-center text-2xl font-bold text-black">
               {weekDates[i]}
             </div>
             <div className="text-center font-medium text-gray-600">{day}</div>

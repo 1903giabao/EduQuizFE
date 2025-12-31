@@ -4,9 +4,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        'blue4167cd': '#4167cd', // valid name
-      },
+        blue4167cd: "#4167cd",
+      }
     },
   },
   plugins: [],
-}
+};
