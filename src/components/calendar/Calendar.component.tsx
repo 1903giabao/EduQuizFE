@@ -70,9 +70,9 @@ function Calendar({ onSelectDate, isSelectWeek = false }: Props) {
 
   const getWeekRoundedClass = (date: Date) => {
     if (!isSelectWeek || !isInSelectedWeek(date)) return "";
-
-    if (date.getDay() === 1) return "rounded-l-full";
-    if (date.getDay() === 0) return "rounded-r-full";
+    
+    if (date.getDay() === 1) return "rounded-l-full bg-blue-300";
+    if (date.getDay() === 0) return "rounded-r-full bg-blue-300";
 
     return "bg-blue-300";
   };
@@ -82,16 +82,16 @@ function Calendar({ onSelectDate, isSelectWeek = false }: Props) {
   }, [selectedDate]);
 
   return (
-    <div className="w-80 bg-blue-50 text-black p-4 rounded-xl border-2 border-blue4167cd">
+    <div className="w-80 text-black p-4 rounded-xl">
       <div className="flex flex-row justify-between gap-2 px-6">
         <button
           onClick={() => {
             onChangeMonth(-1);
           }}
         >
-          <div className="w-0 h-0 border-t-[6px] border-b-[6px] border-r-[10px] border-transparent border-r-blue4167cd"></div>
+          <div className="w-0 h-0 border-t-[6px] border-b-[6px] border-r-[10px] border-transparent border-r-black"></div>
         </button>
-        <h2 className="text-center font-semibold text-lg text-blue4167cd">
+        <h2 className="text-center font-semibold text-lg">
           {currentDate.toLocaleDateString("en-US", {
             month: "long",
             year: "numeric",
@@ -102,7 +102,7 @@ function Calendar({ onSelectDate, isSelectWeek = false }: Props) {
             onChangeMonth(1);
           }}
         >
-          <div className="w-0 h-0 border-t-[6px] border-b-[6px] border-l-[10px] border-transparent border-l-blue4167cd"></div>
+          <div className="w-0 h-0 border-t-[6px] border-b-[6px] border-l-[10px] border-transparent border-l-black"></div>
         </button>
       </div>
       <div className="mt-4 grid grid-cols-7 text-center text-sm text-gray-500">

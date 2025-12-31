@@ -49,15 +49,15 @@ function SchedulePage() {
         <SideBar />
       </div>
 
-      <div className="flex-1">
-        <div className="text-center mt-12 mb-8 text-4xl font-bold text-blue4167cd">
-          My schedule
+      <div className="mt-12 flex-1">
+        <div className="text-center mt-12 text-4xl font-bold">
+          {curDate.toLocaleString("en-US", { month: "long" })} {curDate.getFullYear().toString()}
         </div>
-        <div className="relative max-h-[600px] overflow-auto p-6 mt-12">
+        <div className="relative max-h-[600px] overflow-auto p-6 mt-2">
           <Schedule slots={classSlots} startDateOfWeek={startDateOfWeek} />
         </div>
       </div>
-      <div className="my-12 rounded-s-3xl flex-2 p-8 bg-blue-50">
+      <div className="my-12 rounded-s-3xl flex-2 p-8 bg-white">
         <Calendar
           onSelectDate={(date) => setCurDate(date)}
           isSelectWeek={true}
