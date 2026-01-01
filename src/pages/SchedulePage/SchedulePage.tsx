@@ -6,6 +6,27 @@ import { ClassSlotResult } from "../../services/api/class/classSlot/getClassSlot
 import GetClassSlot from "../../services/api/class/classSlot/getClassSlot/api";
 import { useGetWeekDate } from "../../hooks/calendar/useGetWeekDate";
 import dayjs from "dayjs";
+import HeaderBar from "../../components/header/HeaderBar.component";
+
+function PlusIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="size-5"
+    >
+      <path
+        fillRule="evenodd"
+        d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
+        clipRule="evenodd"
+      />
+    </svg>
+  );
+}
 
 function SchedulePage() {
   const [error, setError] = useState("");
@@ -45,6 +66,10 @@ function SchedulePage() {
 
   return (
     <div className="flex h-screen">
+      <div className="absolute -z-10 left-60 w-[calc(100%-15rem)]">
+        <HeaderBar title="Schedule board" />
+      </div>
+
       <div className="w-64">
         <SideBar />
       </div>
@@ -53,11 +78,12 @@ function SchedulePage() {
         <div className="text-center mt-12 text-4xl font-bold">
           {curDate.toLocaleString("en-US", { month: "long" })} {curDate.getFullYear().toString()}
         </div>
-        <div className="relative max-h-[600px] overflow-auto p-6 mt-2">
-          <Schedule slots={classSlots} startDateOfWeek={startDateOfWeek} />
+
+        <div className="relative mt-6 max-h-[740px] overflow-auto p-6">
+          <Schedule slots={classSlots} startDateOfWeek={startDateOfWeek} curDate={curDate} />
         </div>
       </div>
-      <div className="my-12 rounded-s-3xl flex-2 p-8 bg-white">
+      <div className="mt-24 rounded-ss-3xl flex-2 p-8 bg-white">
         <Calendar
           onSelectDate={(date) => setCurDate(date)}
           isSelectWeek={true}

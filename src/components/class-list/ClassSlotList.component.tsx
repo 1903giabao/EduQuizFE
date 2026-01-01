@@ -64,7 +64,7 @@ function ClassSlotList({ date }: Props) {
               src="/take_a_break.png"
               alt="Take a break Image"
             />
-            <div className="text-2xl font-semibold m-2">No slot today</div>
+            <div className="text-2xl font-semibold m-2">No class today</div>
             <p>Take a break and come back tomorrow!</p>
           </div>
         )}
