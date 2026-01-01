@@ -20,6 +20,7 @@ const today = new Date();
 function Schedule({
   slots,
   startDateOfWeek,
+  curDate,
   startTime = "08:00",
   endTime = "23:00",
   stepMinutes = 30,
@@ -49,17 +50,35 @@ function Schedule({
 
   return (
     <div className="relative">
-      <div className="grid grid-cols-[80px_repeat(7,1fr)] auto-rows-[60px]  rounded-3xl bg-white">
+      <div className="grid grid-cols-[80px_repeat(7,1fr)] auto-rows-[60px] rounded-3xl bg-white">
         <div />
 
-        {DAYS_IN_WEEK.map((day, i) => (
-          <div key={day} className="border-l border-blue-100">
-            <div className="text-center text-2xl font-bold text-black">
-              {weekDates[i]}
+        {DAYS_IN_WEEK.map((day, i) => {
+          const targetDate = new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            weekDates[i]
+          );
+
+          const isToday =
+            today.getFullYear() === targetDate.getFullYear() &&
+            today.getMonth() === targetDate.getMonth() &&
+            today.getDate() === targetDate.getDate();
+
+          return (
+            <div
+              key={day}
+              className={`border-l border-blue-100 ${
+                isToday && "text-red-700 bg-blue-50"
+              }`}
+            >
+              <div className="text-center text-2xl font-bold text-black">
+                {weekDates[i]}
+              </div>
+              <div className="text-center font-medium text-gray-600">{day}</div>
             </div>
-            <div className="text-center font-medium text-gray-600">{day}</div>
-          </div>
-        ))}
+          );
+        })}
 
         {times.map((time) => (
           <div key={time} className="border-t border-blue-100 contents">
@@ -69,16 +88,31 @@ function Schedule({
               </div>
               <div className="relative border-t border-blue-100"></div>
             </div>
-            {DAYS_IN_WEEK.map((day) => (
-              <div
-                key={day}
-                className="border-t border-l border-blue-100"
-              ></div>
-            ))}
+            {DAYS_IN_WEEK.map((day, i) => {
+              const targetDate = new Date(
+                today.getFullYear(),
+                today.getMonth(),
+                weekDates[i]
+              );
+
+              const isToday =
+                today.getFullYear() === targetDate.getFullYear() &&
+                today.getMonth() === targetDate.getMonth() &&
+                today.getDate() === targetDate.getDate();
+
+              return (
+                <div
+                  key={day}
+                  className={`border-t border-l border-blue-100 ${
+                isToday && "text-red-700 bg-blue-50"
+              }`}
+                ></div>
+              );
+            })}
           </div>
         ))}
       </div>
-      <div className="absolute mt-[8px] inset-0 grid grid-cols-[80px_repeat(7,1fr)] auto-rows-[30px]">
+      <div className="absolute inset-0 grid grid-cols-[80px_repeat(7,1fr)] auto-rows-[30px]">
         {slots.map((slot) => {
           const start = new Date(slot.startTime);
           const end = new Date(slot.endTime);
@@ -102,8 +136,7 @@ function Schedule({
                   transition-transform duration-200 ease-out hover:scale-[1.1] 
                   hover:cursor-pointer 
                   hover:z-20 
-                  hover:shadow-[0_10px_24px_rgba(65,103,205,0.25)]
-                hover:border-black hover:border`
+                  hover:shadow-[0_10px_24px_rgba(65,103,205,0.25)]`
               }`}
               style={{
                 gridColumnStart: dayInWeek - 1,
@@ -129,6 +162,7 @@ function Schedule({
 export type Props = {
   slots: ClassSlotResult[];
   startDateOfWeek: Date;
+  curDate: Date;
   startTime?: string;
   endTime?: string;
   stepMinutes?: number;
