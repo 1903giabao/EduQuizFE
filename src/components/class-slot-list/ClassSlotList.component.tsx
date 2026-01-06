@@ -30,6 +30,7 @@ function ClassSlotList({ date }: Props) {
 
         if (response.errorMessage) {
           setError(response.errorMessage);
+          return;          
         }
 
         setClassSlots(response.data);

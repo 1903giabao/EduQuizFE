@@ -5,6 +5,7 @@ import StudentHomePage from "./pages/student-home-page/student-home-page.compone
 import TeacherHomePage from "./pages/teacher-home-page/teacher-home-page.component"
 import ProtectedRoute from "./components/common/protected-route.component"
 import SchedulePage from "./pages/SchedulePage/SchedulePage"
+import MyClassPage from "./pages/MyClassesPage/MyClassPage"
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/student" element={<StudentHomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<Navigate to="/login" />} />
+        <Route path="/classes" element={<MyClassPage />} />
         <Route path="/teacher" element={
             <ProtectedRoute role="Teacher">
               <TeacherHomePage />

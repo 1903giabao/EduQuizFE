@@ -1,9 +1,7 @@
 import dayjs from "dayjs";
-import { ClassSlotResult } from "../../services/api/class/classSlot/getClassSlot/dto";
+import { ClassResult } from "../../services/api/class/getClasses/dto";
 
-function ClassSlot({ slot }: { slot: ClassSlotResult }) {
-  if (!slot) return null;
-
+function Class({ classData }: { classData: ClassResult }) {
   return (
     <div
       className="
@@ -27,30 +25,26 @@ function ClassSlot({ slot }: { slot: ClassSlotResult }) {
       </div>
       <div className="flex flex-col gap-2 text-lg">
         <div className="text-2xl text-center font-semibold text-[#00adef]">
-          {slot.className}
+          {classData.name}
         </div>
 
         <div>
           <span className="font-semibold">Location: </span>
-          {slot.location}
-        </div>
-        <div>
-          <span className="font-semibold">Time: </span>
-          {`${dayjs(new Date(slot.startTime)).format("HH:mm")} - ${dayjs(
-            new Date(slot.endTime)
-          ).format("HH:mm")}`}
+          {classData.status}
         </div>
         <div className="">
           <span className="font-semibold">Teacher: </span>
-          <span>{slot.teacherName}</span>
+          <span>{classData.teacherName}</span>
         </div>
       </div>
       <div className="mt-8 text-lg font-bold text-red-600">
         <span>Note: </span>
-        {slot.classDescription.split(" ").slice(0, 5).join(" ")}...
+        {classData.description &&
+          classData.description.split(" ").slice(0, 5).join(" ")}
+        ...
       </div>
     </div>
   );
 }
 
-export default ClassSlot;
+export default Class;
