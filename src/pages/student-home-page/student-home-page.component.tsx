@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import SideBar from "../../components/side-bar/side-bar.component";
 import Calendar from "../../components/calendar/Calendar.component";
-import ClassSlotList from "../../components/class-list/ClassSlotList.component";
+import ClassSlotList from "../../components/class-slot-list/ClassSlotList.component";
 import { useState } from "react";
 import HeaderBar from "../../components/header/HeaderBar.component";
 import dayjs from "dayjs";

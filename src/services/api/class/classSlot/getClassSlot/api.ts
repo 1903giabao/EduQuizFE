@@ -5,7 +5,6 @@ import {
   GetClassSlotPayload,
   GetClassSlotResult,
 } from "./dto";
-import dayjs from "dayjs";
 
 async function GetClassSlot({
   studentId,
@@ -42,17 +41,7 @@ async function GetClassSlot({
 
     if (!apiData?.success) {
       return {
-        data: [
-          {
-            id: null,
-            className: null,
-            location: null,
-            classDescription: null,
-            teacherName: null,
-            startTime: null,
-            endTime: null,
-          },
-        ],
+        data: null,
         errorMessage: apiData.errors?.[0]?.message || "Fail to get class slots",
       };
     }
@@ -71,17 +60,7 @@ async function GetClassSlot({
     };
   } catch (error) {
     return {
-      data: [
-        {
-          id: null,
-          className: null,
-          location: null,
-          classDescription: null,
-          teacherName: null,
-          startTime: null,
-          endTime: null,
-        },
-      ],
+      data: null,
       errorMessage: error.message || "Fail to get class slots",
     };
   }
