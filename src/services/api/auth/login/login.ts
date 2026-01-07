@@ -1,22 +1,12 @@
 import axiosClient from "../../axiosClient";
 import { ApiResponse } from "../../../../types/api-response";
 
-type ApiError = {
-  message: string;
-};
-
 type LoginResponse = {
-  token: {
-    accessToken: string;
-    refreshToken: string;
-  };
   role: string;
   accountId: string;
 };
 
 type LoginResult = {
-  accessToken: string;
-  refreshToken: string;
   role: string;
   accountId: string;
   errorMessage: string;
@@ -38,8 +28,6 @@ export const login = async (
 
     if (!apiData.success) {
       return {
-        accessToken: null,
-        refreshToken: null,
         role: null,
         accountId: null,
         errorMessage:
@@ -47,23 +35,15 @@ export const login = async (
       };
     }
 
-    const { token, role, accountId } = apiData.data;
-
-    localStorage.setItem("accessToken", token.accessToken);
-    localStorage.setItem("role", role);
-    localStorage.setItem("accountId", accountId);
+    const { role, accountId } = apiData.data;
 
     return {
-      accessToken: token.accessToken,
-      refreshToken: token.refreshToken,
       role,
       accountId,
       errorMessage: null,
     };
   } catch (err) {
     return {
-      accessToken: null,
-      refreshToken: null,
       role: null,
       accountId: null,
       errorMessage:

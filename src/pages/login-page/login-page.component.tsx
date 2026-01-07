@@ -1,22 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LoginForm from "./login-form.component";
 import SignupForm from "../sign-up-page/sign-up-form.component";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 function LoginPage() {
-  const [isLogin, setIsLogin] = useState<Boolean>(true);
-  const [showForm, setShowForm] = useState<Boolean>(true);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isLoginRoute = location.pathname === "/login";
+  const [isLogin, setIsLogin] = useState<boolean>(isLoginRoute);
+  const [showForm, setShowForm] = useState<boolean>(isLoginRoute);
+  const { user, loading } = useAuth();
+
+  if (loading) return;
+
+  if (user) {
+    return <Navigate to="/schedule" replace />;
+  }
 
   const toggleForm = () => {
-    setIsLogin(!isLogin);
+    setIsLogin((prev) => !prev);
 
     setTimeout(() => {
-      setShowForm(!showForm);
+      setShowForm((prev) => !prev);
     }, 250);
+
+    navigate(isLogin ? "/signup" : "/login", { replace: true });
   };
 
   return (
     <div className="h-screen flex overflow-hidden relative">
-      {/* Form Container */}
       <div
         className={`w-1/2 h-full flex items-center justify-center transition-transform duration-700 ${
           isLogin ? "translate-x-0" : "translate-x-full"
@@ -30,8 +43,6 @@ function LoginPage() {
           )}
         </div>
       </div>
-
-      {/* Image Container */}
       <div
         className={`w-1/2 h-full transition-transform duration-700 ${
           isLogin ? "translate-x-0" : "-translate-x-full"

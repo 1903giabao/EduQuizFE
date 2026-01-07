@@ -7,12 +7,14 @@ import {
 } from "../../services/api/class/classSlot/getClassSlot/dto";
 import dayjs from "dayjs";
 import ClassSlotSkeleton from "./ClassSlotSkeleton.component";
+import { useAuth } from "../../context/AuthContext";
 
 function ClassSlotList({ date }: Props) {
+  const { user } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [classSlots, setClassSlots] = useState<ClassSlotResult[]>([]);
-  const studentId = localStorage.getItem("accountId");
+  const studentId = user.id;
   const teacherId = null;
 
   useEffect(() => {

@@ -7,33 +7,18 @@ import GetClassSlot from "../../services/api/class/classSlot/getClassSlot/api";
 import { useGetWeekDate } from "../../hooks/calendar/useGetWeekDate";
 import dayjs from "dayjs";
 import HeaderBar from "../../components/header/HeaderBar.component";
-
-function PlusIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth={1.5}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="size-5"
-    >
-      <path
-        fillRule="evenodd"
-        d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
-        clipRule="evenodd"
-      />
-    </svg>
-  );
-}
+import ClassSlotList from "../../components/class-slot-list/ClassSlotList.component";
+import { Role } from "../../types/role";
+import { useAuth } from "../../context/AuthContext";
 
 function SchedulePage() {
+  const { user } = useAuth();
   const [error, setError] = useState("");
   const [curDate, setCurDate] = useState<Date>(new Date());
   const [classSlots, setClassSlots] = useState<ClassSlotResult[]>([]);
-  const studentId = localStorage.getItem("accountId");
+  const studentId = user.id;
   const teacherId = null;
+  const role = user.role;
 
   const curWeek = useMemo(() => useGetWeekDate(curDate), [curDate]);
 
@@ -64,8 +49,41 @@ function SchedulePage() {
     fetchSlots();
   }, [studentId, teacherId, startDateOfWeek, endDateOfWeek]);
 
+  function renderBaseOnRole(role: string) {
+    switch (role) {
+      case Role.Teacher: {
+        return (
+          <div className="mt-12 flex-1">
+            <div className="text-center mt-12 text-4xl font-bold">
+              {curDate.toLocaleString("en-US", { month: "long" })}{" "}
+              {curDate.getFullYear().toString()}
+            </div>
+
+            <div className="relative mt-6 max-h-[740px] overflow-auto p-6">
+              <Schedule
+                slots={classSlots}
+                startDateOfWeek={startDateOfWeek}
+                curDate={curDate}
+              />
+            </div>
+          </div>
+        );
+      }
+      case Role.Student: {
+        return (
+          <div className="flex-1 mt-12 p-6">
+            <div className="text-center mt-8 mb-8 text-4xl font-bold text-[#00adef]">
+              My classes in {curDate && dayjs(curDate).format("DD/MM/YYYY")}
+            </div>
+            <ClassSlotList date={curDate} />
+          </div>
+        );
+      }
+    }
+  }
+
   return (
-    <div className="flex h-screen">
+    <div className="flex min-h-screen">
       <div className="absolute -z-10 left-60 w-[calc(100%-15rem)]">
         <HeaderBar title="Schedule board" />
       </div>
@@ -73,20 +91,11 @@ function SchedulePage() {
       <div className="w-64">
         <SideBar />
       </div>
-
-      <div className="mt-12 flex-1">
-        <div className="text-center mt-12 text-4xl font-bold">
-          {curDate.toLocaleString("en-US", { month: "long" })} {curDate.getFullYear().toString()}
-        </div>
-
-        <div className="relative mt-6 max-h-[740px] overflow-auto p-6">
-          <Schedule slots={classSlots} startDateOfWeek={startDateOfWeek} curDate={curDate} />
-        </div>
-      </div>
+      {renderBaseOnRole(role)}
       <div className="mt-24 rounded-ss-3xl flex-2 p-8 bg-white">
         <Calendar
           onSelectDate={(date) => setCurDate(date)}
-          isSelectWeek={true}
+          isSelectWeek={role && role === Role.Teacher}
         />
       </div>
     </div>

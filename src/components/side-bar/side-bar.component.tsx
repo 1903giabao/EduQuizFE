@@ -8,18 +8,24 @@ import {
   ScheduleIcon,
   SignOutIcon,
 } from "./side-bar-icons.component";
+import { useAuth } from "../../context/AuthContext";
 
 export const SideBarSection = [
-  { id: "home", label: "Home", path: "/student", icon: <HomeIcon /> },
-  { id: "schedule", label: "Schedule", path: "/", icon: <ScheduleIcon /> },
-  { id: "classes", label: "My Classes", path: "/classes", icon: <ClassIcon /> },
-  { id: "quizzes", label: "My Quizzes", path: "/quizzes", icon: <QuizIcon /> },
+  { id: "schedule", label: "Schedule", path: "/schedule", icon: <ScheduleIcon /> },
+  { id: "classes", label: "Classes", path: "/classes", icon: <ClassIcon /> },
+  { id: "quizzes", label: "Quizzes", path: "/quizzes", icon: <QuizIcon /> },
   { id: "profile", label: "Profile", path: "/profile", icon: <ProfileIcon /> },
 ];
 
 function SideBar() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login");
+  };
 
   const baseItem =
     "flex flex-row gap-4 block rounded-e-3xl pl-10 pr-4 py-4 text-lg font-bold cursor-pointer transition-all duration-200 pl-6";
@@ -28,7 +34,7 @@ function SideBar() {
   const inactiveItem = "text-white hover:bg-white hover:text-blue4167cd";
 
   return (
-    <div className="flex h-screen w-64 flex-col justify-between border-e border-gray-100 rounded-e-3xl bg-gradient-to-r from-[#00adef] to-[#3871c1]">
+    <div className="flex min-h-screen w-64 flex-col justify-between border-e border-gray-100 rounded-e-3xl bg-gradient-to-r from-[#00adef] to-[#3871c1]">
       <div className="py-6">
         <div className="mt-4 flex justify-center items-center">
           <img
@@ -73,7 +79,7 @@ function SideBar() {
           </li>
           <li className="mt-4">
             <div
-              onClick={() => navigate("/")}
+              onClick={() => handleLogout()}
               className={`${baseItem} ${inactiveItem}`}
             >
               <span className="my-auto">

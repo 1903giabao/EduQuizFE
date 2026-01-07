@@ -1,13 +1,15 @@
 import { useState, FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { login } from "../../services/api/auth/login/login";
 import PasswordInput from "../../components/forms/password-input.component";
+import { useAuth } from "../../context/AuthContext";
 
 type LoginFormProps = {
   onSwitch: () => void;
 };
 
 function LoginForm({ onSwitch }: LoginFormProps) {
+  const { refreshMe } = useAuth();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
@@ -24,11 +26,8 @@ function LoginForm({ onSwitch }: LoginFormProps) {
       return;
     }
 
-    if (result?.role === "Teacher") {
-      navigate("/teacher");
-    } else {
-      navigate("/student");
-    }
+    await refreshMe();
+    navigate("/schedule", { replace: true });
   };
 
   return (
