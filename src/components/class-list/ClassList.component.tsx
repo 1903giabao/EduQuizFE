@@ -3,19 +3,43 @@ import GetClasses from "../../services/api/class/getClasses/api";
 import ClassSlotSkeleton from "../class-slot-list/ClassSlotSkeleton.component";
 import { ClassResult } from "../../services/api/class/getClasses/dto";
 import Class from "./Class.component";
+import { Role } from "../../types/role";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 function ClassList() {
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [classes, setClasses] = useState([]);
-  const teacherId = localStorage.getItem("accountId");
+  const role = user.role;
+  const accountId = user.id;
 
   useEffect(() => {
     const fetchAsync = async () => {
       try {
+        if (!role) {
+          navigate("/login");
+        }
         setLoading(true);
         await new Promise((resolve) => setTimeout(resolve, 2000));
-        const response = await GetClasses({ teacherIds: teacherId });
+        let payload: Record<string, any>;
+
+        switch (role) {
+          case Role.Teacher:
+            payload = { teacherIds: accountId };
+            break;
+
+          case Role.Student:
+            payload = { studentIds: accountId };
+            break;
+
+          default:
+            navigate("/login");
+        }
+
+        const response = await GetClasses(payload);
 
         if (response.errorMessage) {
           setError(response.errorMessage);
@@ -29,7 +53,7 @@ function ClassList() {
     };
 
     fetchAsync();
-  }, [teacherId]);
+  }, [accountId]);
 
   return (
     <div className="w-full">
