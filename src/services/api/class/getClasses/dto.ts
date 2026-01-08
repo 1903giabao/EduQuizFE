@@ -1,3 +1,5 @@
+import { ApiMeta } from "../../../../types/api-response";
+
 export type GetClassesPayload = {
   teacherIds?: string;
   studentIds?: string;
@@ -15,10 +17,12 @@ export type GetClassesResponse = {
   teacherId: string | null;
   teacherName: string | null;
   status: string;
+  numOfStudents: number;
 };
 
 export type GetClassesResult = {
   data: ClassResult[];
+  meta: ApiMeta;
   errorMessage: string;
 };
 
@@ -30,4 +34,5 @@ export type ClassResult = {
   teacherId: string;
   teacherName: string;
   status: string;
+  numOfStudents: number;
 };

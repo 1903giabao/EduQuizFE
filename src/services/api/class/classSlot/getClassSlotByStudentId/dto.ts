@@ -1,9 +1,13 @@
-export type GetClassSlotPayload = {
+import { ApiMeta } from "../../../../../types/api-response";
+
+export type GetClassSlotByStudentIdPayload = {
   studentId: string;
   teacherId?: string;
   date?: string;
   startDate?: string;
   endDate?: string;
+  page?: number;
+  pageSize?: number;
 };
 
 export type GetClassSlotResponse = {
@@ -18,6 +22,7 @@ export type GetClassSlotResponse = {
 
 export type GetClassSlotResult = {
   data: ClassSlotResult[];
+  meta: ApiMeta;
   errorMessage: string;
 };
 

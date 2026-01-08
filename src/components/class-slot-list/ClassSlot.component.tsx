@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { ClassSlotResult } from "../../services/api/class/classSlot/getClassSlot/dto";
+import { ClassSlotResult } from "../../services/api/class/classSlot/getClassSlotByStudentId/dto";
 
 function ClassSlot({ slot }: { slot: ClassSlotResult }) {
   if (!slot) return null;

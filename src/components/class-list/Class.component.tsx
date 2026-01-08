@@ -27,14 +27,17 @@ function Class({ classData }: { classData: ClassResult }) {
         <div className="text-2xl text-center font-semibold text-[#00adef]">
           {classData.name}
         </div>
-
-        <div>
-          <span className="font-semibold">Location: </span>
-          {classData.status}
-        </div>
         <div className="">
           <span className="font-semibold">Teacher: </span>
           <span>{classData.teacherName}</span>
+        </div>
+        <div>
+          <span className="font-semibold">Status: </span>
+          {classData.status}
+        </div>
+        <div>
+          <span className="font-semibold">Number of students: </span>
+          {classData.numOfStudents}
         </div>
       </div>
       <div className="mt-8 text-lg font-bold text-red-600">

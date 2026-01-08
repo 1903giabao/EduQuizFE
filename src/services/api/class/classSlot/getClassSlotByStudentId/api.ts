@@ -2,17 +2,17 @@ import { ApiResponse } from "../../../../../types/api-response";
 import axiosClient from "../../../axiosClient";
 import {
   GetClassSlotResponse,
-  GetClassSlotPayload,
   GetClassSlotResult,
+  GetClassSlotByStudentIdPayload,
 } from "./dto";
 
-async function GetClassSlot({
+async function GetClassSlotByStudentId({
   studentId,
   teacherId,
   date,
   startDate,
   endDate,
-}: GetClassSlotPayload): Promise<GetClassSlotResult> {
+}: GetClassSlotByStudentIdPayload): Promise<GetClassSlotResult> {
   try {
     const params: Record<string, string> = {};
 
@@ -42,6 +42,7 @@ async function GetClassSlot({
     if (!apiData?.success) {
       return {
         data: null,
+        meta: null,
         errorMessage: apiData.errors?.[0]?.message || "Fail to get class slots",
       };
     }
@@ -56,14 +57,16 @@ async function GetClassSlot({
         startTime: slot.startTime,
         endTime: slot.endTime,
       })),
+      meta: apiData.meta,
       errorMessage: null,
     };
   } catch (error) {
     return {
       data: null,
+      meta: null,
       errorMessage: error.message || "Fail to get class slots",
     };
   }
 }
 
-export default GetClassSlot;
+export default GetClassSlotByStudentId;

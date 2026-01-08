@@ -1,5 +1,6 @@
 import { ApiResponse } from "../../../../types/api-response";
 import axiosClient from "../../axiosClient";
+import { GetClassesPayload, GetClassesResponse, GetClassesResult } from "./dto";
 
 async function GetClasses({
   teacherIds,
@@ -30,6 +31,7 @@ async function GetClasses({
     if (pageSize !== null) {
       params.pageSize = pageSize;
     }
+    console.log(params);
 
     const res = await axiosClient.get<ApiResponse<GetClassesResponse[]>>(
       "classes",
@@ -41,6 +43,7 @@ async function GetClasses({
     if (!apiData?.success) {
       return {
         data: null,
+        meta: null,
         errorMessage: apiData.errors?.[0]?.message || "Fail to get classes",
       };
     }
@@ -54,12 +57,15 @@ async function GetClasses({
         status: cl.status,
         teacherId: cl.teacherId,
         teacherName: cl.teacherName,
+        numOfStudents: cl.numOfStudents,
       })),
+      meta: apiData?.meta,
       errorMessage: null,
     };
   } catch (err) {
     return {
       data: null,
+      meta: null,
       errorMessage: err.message || "Fail to get classes",
     };
   }
