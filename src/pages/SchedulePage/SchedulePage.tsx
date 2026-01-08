@@ -2,22 +2,21 @@ import Calendar from "../../components/calendar/Calendar.component";
 import SideBar from "../../components/side-bar/side-bar.component";
 import Schedule from "../../components/schedule/Schedule";
 import { useEffect, useMemo, useState } from "react";
-import { ClassSlotResult } from "../../services/api/class/classSlot/getClassSlot/dto";
-import GetClassSlot from "../../services/api/class/classSlot/getClassSlot/api";
+import { ClassSlotResult } from "../../services/api/class/classSlot/getClassSlotByStudentId/dto";
 import { useGetWeekDate } from "../../hooks/calendar/useGetWeekDate";
 import dayjs from "dayjs";
 import HeaderBar from "../../components/header/HeaderBar.component";
 import ClassSlotList from "../../components/class-slot-list/ClassSlotList.component";
 import { Role } from "../../types/role";
 import { useAuth } from "../../context/AuthContext";
+import GetClassSlotByTeacherId from "../../services/api/class/classSlot/getClassSlotByTeacherId/api";
 
 function SchedulePage() {
   const { user } = useAuth();
   const [error, setError] = useState("");
   const [curDate, setCurDate] = useState<Date>(new Date());
   const [classSlots, setClassSlots] = useState<ClassSlotResult[]>([]);
-  const studentId = user.id;
-  const teacherId = null;
+  const teacherId = user.id;
   const role = user.role;
 
   const curWeek = useMemo(() => useGetWeekDate(curDate), [curDate]);
@@ -29,8 +28,7 @@ function SchedulePage() {
       try {
         const startDateString = dayjs(startDateOfWeek).format("YYYY-MM-DD");
         const endDateString = dayjs(endDateOfWeek).format("YYYY-MM-DD");
-        const response = await GetClassSlot({
-          studentId,
+        const response = await GetClassSlotByTeacherId({
           teacherId,
           startDate: startDateString,
           endDate: endDateString,
@@ -47,7 +45,7 @@ function SchedulePage() {
     };
 
     fetchSlots();
-  }, [studentId, teacherId, startDateOfWeek, endDateOfWeek]);
+  }, [teacherId, startDateOfWeek, endDateOfWeek]);
 
   function renderBaseOnRole(role: string) {
     switch (role) {

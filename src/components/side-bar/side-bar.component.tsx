@@ -11,7 +11,12 @@ import {
 import { useAuth } from "../../context/AuthContext";
 
 export const SideBarSection = [
-  { id: "schedule", label: "Schedule", path: "/schedule", icon: <ScheduleIcon /> },
+  {
+    id: "schedule",
+    label: "Schedule",
+    path: "/schedule",
+    icon: <ScheduleIcon />,
+  },
   { id: "classes", label: "Classes", path: "/classes", icon: <ClassIcon /> },
   { id: "quizzes", label: "Quizzes", path: "/quizzes", icon: <QuizIcon /> },
   { id: "profile", label: "Profile", path: "/profile", icon: <ProfileIcon /> },

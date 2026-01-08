@@ -3,7 +3,7 @@ import {
   timeToMinutes,
   useGenerateTimes,
 } from "../../hooks/schedule/useGenerateTimes";
-import { ClassSlotResult } from "../../services/api/class/classSlot/getClassSlot/dto";
+import { ClassSlotResult } from "../../services/api/class/classSlot/getClassSlotByStudentId/dto";
 
 const DAYS_IN_WEEK = [
   "Monday",
@@ -55,8 +55,8 @@ function Schedule({
 
         {DAYS_IN_WEEK.map((day, i) => {
           const targetDate = new Date(
-            today.getFullYear(),
-            today.getMonth(),
+            curDate.getFullYear(),
+            curDate.getMonth(),
             weekDates[i]
           );
 
@@ -90,8 +90,8 @@ function Schedule({
             </div>
             {DAYS_IN_WEEK.map((day, i) => {
               const targetDate = new Date(
-                today.getFullYear(),
-                today.getMonth(),
+                curDate.getFullYear(),
+                curDate.getMonth(),
                 weekDates[i]
               );
 
