@@ -20,9 +20,6 @@ async function CreateClass({
       slotInDays
     });
 
-    console.log(res);
-    
-
     const apiData = res.data;
 
     if (!apiData?.success) {

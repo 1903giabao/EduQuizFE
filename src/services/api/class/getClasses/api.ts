@@ -31,7 +31,6 @@ async function GetClasses({
     if (pageSize !== null) {
       params.pageSize = pageSize;
     }
-    console.log(params);
 
     const res = await axiosClient.get<ApiResponse<GetClassesResponse[]>>(
       "classes",
