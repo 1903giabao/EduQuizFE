@@ -51,7 +51,7 @@ function SideBar() {
 
         <ul className="mt-20">
           {SideBarSection.map((item) => {
-            const isActive = location.pathname === item.path;
+            const isActive = location.pathname.includes(item.path);
 
             return (
               <li key={item.id} className="mt-4">

@@ -5,6 +5,7 @@ import SchedulePage from "./pages/SchedulePage/SchedulePage";
 import MyClassPage from "./pages/MyClassesPage/MyClassPage";
 import { Role } from "./types/role";
 import { AuthProvider } from "./context/AuthContext";
+import ClassDetailPage from "./pages/ClassDetailPage/ClassDetailPage";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             element={<ProtectedRoute roles={[Role.Student, Role.Teacher]} />}
           >
             <Route path="/classes" element={<MyClassPage />} />
+            <Route path="/classes/:id" element={<ClassDetailPage />} />
             <Route path="/schedule" element={<SchedulePage />} />
           </Route>
         </Routes>

@@ -1,9 +1,17 @@
 import dayjs from "dayjs";
 import { ClassResult } from "../../services/api/class/getClasses/dto";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function Class({ classData }: { classData: ClassResult }) {
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate(`/classes/${classData.id}`);
+  };
+
   return (
     <div
+      onClick={handleNavigate}
       className="
         my-4 mx-16 grid grid-cols-3
         text-sm text-gray-800
