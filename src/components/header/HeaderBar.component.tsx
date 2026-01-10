@@ -1,3 +1,6 @@
+import { useAuth } from "../../context/AuthContext";
+import { Role } from "../../types/role";
+
 export const SideBarSection = [
   { id: "home", label: "Home" },
   { id: "schedule", label: "Schedule" },
@@ -7,6 +10,7 @@ export const SideBarSection = [
 ];
 
 function HeaderBar({ title }: Props) {
+  const { user } = useAuth();
   return (
     <header className="h-16 pl-16 bg-white flex">
       <div className="flex flex-row gap-4 pr-20 items-center">
@@ -44,8 +48,8 @@ function HeaderBar({ title }: Props) {
         </span>
       </div>
       <div className="my-auto">
-        <div className="text-lg font-semibold">Ms.Khanh Van</div>
-        <div>@ieltswithmsvan</div>
+        <div className="text-lg font-semibold">{user.fullName}</div>
+        <div>{user.email}</div>
       </div>
       <div className="my-auto ml-4 mr-20">
         <svg
