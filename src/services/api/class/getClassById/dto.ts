@@ -44,7 +44,6 @@ export type QuizOfClass = {
 };
 
 export type ScheduleOfClass = {
-  day: WeekDay;
   location: string;
   startTime: string;
   endTime: string;

@@ -27,6 +27,7 @@ function ClassList({ search, status }: Props) {
   const { data, isLoading, error, isFetching } = useQuery({
     queryKey: ["classes", role, accountId, search, status, page],
     enabled: !!role && !!accountId,
+    refetchOnWindowFocus: false,
     queryFn: async () => {
       let payload: Record<string, any> = { page, pageSize: PAGE_SIZE };
 
@@ -61,7 +62,7 @@ function ClassList({ search, status }: Props) {
     },
   });
 
-  if (isLoading) return <ClassSlotSkeleton />;
+  if (isLoading || isFetching) return <ClassSlotSkeleton />;
 
   const classes = (data.data ?? []).filter(
     (cl): cl is ClassResult => cl != null
