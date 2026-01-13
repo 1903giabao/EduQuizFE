@@ -25,12 +25,22 @@ export const SideBarSection = [
 function SideBar() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
 
   const handleLogout = async () => {
     await logout();
     navigate("/login");
   };
+
+  function handleNavigate(pathId: string, path: string) {
+    var id = user.id;
+    if (pathId === "profile") {
+      var profilePath = `${path}/${id}`;
+      navigate(profilePath);
+      return;
+    }
+    navigate(path);
+  }
 
   const baseItem =
     "flex flex-row gap-4 block rounded-e-3xl pl-10 pr-4 py-4 text-lg font-bold cursor-pointer transition-all duration-200 pl-6";
@@ -56,7 +66,7 @@ function SideBar() {
             return (
               <li key={item.id} className="mt-4">
                 <div
-                  onClick={() => navigate(item.path)}
+                  onClick={() => handleNavigate(item.id, item.path)}
                   className={`${baseItem} ${
                     isActive ? activeItem : inactiveItem
                   }`}
