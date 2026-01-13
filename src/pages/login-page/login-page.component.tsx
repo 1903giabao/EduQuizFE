@@ -7,7 +7,7 @@ import { useAuth } from "../../context/AuthContext";
 function LoginPage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const isLoginRoute = location.pathname === "/login";
+  const isLoginRoute = location.pathname !== "/signup";
   const [isLogin, setIsLogin] = useState<boolean>(isLoginRoute);
   const [showForm, setShowForm] = useState<boolean>(isLoginRoute);
   const { user, loading } = useAuth();

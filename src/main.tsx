@@ -3,6 +3,7 @@ import App from "./App";
 import "./index.css";
 import "react-loading-skeleton/dist/skeleton.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { AuthProvider } from "./context/AuthContext";
 
 const rootElement = document.getElementById("root") as HTMLElement;
 const queryClient = new QueryClient();
