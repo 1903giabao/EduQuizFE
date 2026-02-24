@@ -5,6 +5,7 @@ import TeacherProfileSection from "./TeacherProfileSection.component";
 import GetUserProfile from "../../services/api/user/getUserProfile/api";
 import Loading from "../common/Loading.component";
 import dayjs from "dayjs";
+import { EditAvatarIcon } from "./EditProfileIcons.component";
 
 function UserProfile({ id }: Props) {
   const {
@@ -36,35 +37,40 @@ function UserProfile({ id }: Props) {
 
   return (
     <main className="px-8 py-6 space-y-6">
-<div className="bg-white rounded-3xl p-6 shadow-sm flex items-center gap-6">
-  <img
-    src="/avatar-placeholder.png"
-    className="w-24 h-24 rounded-full border"
-  />
+      <div className="bg-white rounded-3xl p-6 shadow-sm flex items-center gap-6">
+        <div className="relative w-24 h-24 group cursor-pointer">
+          <img
+            src={`data:image/png;base64,${profile.avatar}`}
+            className="w-24 h-24 rounded-full border object-cover"
+            alt="Avatar"
+          />
 
-  <div className="flex-1">
-    <h1 className="text-2xl font-bold">{profile.fullName}</h1>
-    <p className="text-gray-500">{profile.email}</p>
-  </div>
+          <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition duration-300 rounded-full flex items-center justify-center">
+            <EditAvatarIcon />
+          </div>
+        </div>
 
-  {/* Right-aligned badges */}
-  <div className="ml-auto pr-24 flex flex-col items-end gap-2">
-    <span className="px-4 py-1 rounded-full text-md font-bold bg-blue-100 text-blue-600">
-      {profile.role.toUpperCase()}
-    </span>
+        <div className="flex-1">
+          <h1 className="text-2xl font-bold">{profile.fullName}</h1>
+          <p className="text-gray-500">{profile.email}</p>
+        </div>
 
-    {profile.isActive ? (
-      <span className="px-4 py-1 rounded-full text-md font-bold bg-green-100 text-green-600">
-        Active
-      </span>
-    ) : (
-      <span className="px-4 py-1 rounded-full text-md font-bold bg-gray-100 text-black">
-        Inactive
-      </span>
-    )}
-  </div>
-</div>
+        <div className="ml-auto pr-24 flex flex-col items-end gap-2">
+          <span className="px-4 py-1 rounded-full text-md font-bold bg-blue-100 text-blue-600">
+            {profile.role.toUpperCase()}
+          </span>
 
+          {profile.isActive ? (
+            <span className="px-4 py-1 rounded-full text-md font-bold bg-green-100 text-green-600">
+              Active
+            </span>
+          ) : (
+            <span className="px-4 py-1 rounded-full text-md font-bold bg-gray-100 text-black">
+              Inactive
+            </span>
+          )}
+        </div>
+      </div>
 
       <div className="bg-white rounded-3xl p-6 shadow-sm">
         <h2 className="text-xl font-bold mb-4">General Information</h2>
